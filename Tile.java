@@ -1,6 +1,6 @@
 public class Tile {
     
-    int value;
+    protected int value;
 
     /*
      * creates a tile using the given value. False jokers are not included in this game.
@@ -12,10 +12,9 @@ public class Tile {
     /*
      * TODO: should check if the given tile t and this tile have the same value 
      * return true if they are matching, false otherwise
-     * Burkay changed this method
      */
     public boolean matchingTiles(Tile t) {
-        return t.getValue() == this.value;
+        return t.value == this.value;
     }
 
     /*
@@ -23,16 +22,9 @@ public class Tile {
      * return 1 if given tile has smaller in value
      * return 0 if they have the same value
      * return -1 if the given tile has higher value
-     * Burkay changed this method
      */
     public int compareTo(Tile t) {
-        if(t.getValue() > this.value){
-            return -1;
-        }
-        else if(t.getValue() == this.value){
-            return 0;
-        }
-        return 1;
+       return matchingTiles(t) ? 0 : t.value < this.value ? 1 : -1;
     }
 
     /*
@@ -40,13 +32,9 @@ public class Tile {
      * this method should check the difference in values of the two tiles
      * should return true if the absoulute value of the difference is 1 (they can form a chain)
      * otherwise, it should return false (they cannot form a chain)
-     * Burkay changed this method
      */
     public boolean canFormChainWith(Tile t) {
-        if(Math.abs(this.value-t.getValue()) == 1){
-            return true;
-        }
-        return false;
+        return (this.value == t.value + 1 || this.value == t.value - 1);
     }
 
     public String toString() {

@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Player {
     String playerName;
     Tile[] playerTiles;
@@ -17,6 +19,7 @@ public class Player {
      * check the assigment text for more details on winning condition
      */
     public boolean checkWinning() {
+        // STILL NEEDS
         return false;
     }
 
@@ -28,18 +31,45 @@ public class Player {
      */
     public int findLongestChain() {
         int longestChain = 0;
+        int currentlylongestChain = 0;
+
+        for (int i = 0; i < playerTiles.length - 1; i++) {
+            if (playerTiles[i].getValue() == playerTiles[i+1].getValue() +1){
+                currentlylongestChain += 1;
+            }
+            else{
+                if(currentlylongestChain > longestChain){
+                    longestChain = currentlylongestChain;
+                }
+                currentlylongestChain = 0;
+            }
+        }
 
         return longestChain;
     }
 
     /*
      * TODO: removes and returns the tile in given index position
-     * Burkay changed this method
      */
     public Tile getAndRemoveTile(int index) {
-        Tile removedTile = playerTiles[index]; 
-        playerTiles[index] = null; 
-        return removedTile;
+        Tile[] newList = new Tile[15];
+        newList[15] = 100;
+        int plusWhat = 0;
+        int inPositin;
+
+        for (int i = 0; i < playerTiles.length -1; i++) {
+            if(i == index){
+                plusWhat = 1;
+                inPositin = playerTiles[i];
+            }
+            else{
+                newList[i + plusWhat] = playerTiles[i];
+            }
+        }
+
+        playerTiles = newList;
+
+        return inPositin;
     }
 
     /*
@@ -48,7 +78,22 @@ public class Player {
      * then shift the remaining tiles to the right by one
      */
     public void addTile(Tile t) {
+        playerTiles[playerTiles.length - 1] = t;
+        this.bubbleSort(playerTiles);
+    }
 
+    private void bubbleSort(Tile[] arr) {
+        int n = arr.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arr[j].getValue() > arr[j + 1].getValue()) {
+                    // Swap arr[j] and arr[j+1]
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
     }
 
     /*
@@ -56,7 +101,6 @@ public class Player {
      */
     public int findPositionOfTile(Tile t) {
         int tilePosition = -1;
-
         for (int i = 0; i < numberOfTiles; i++) {
             if(playerTiles[i].matchingTiles(t)) {
                 tilePosition = i;
