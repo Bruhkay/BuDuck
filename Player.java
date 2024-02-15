@@ -34,9 +34,12 @@ public class Player {
 
     /*
      * TODO: removes and returns the tile in given index position
+     * Burkay changed this method
      */
     public Tile getAndRemoveTile(int index) {
-        return null;
+        Tile removedTile = playerTiles[index]; 
+        playerTiles[index] = null; 
+        return removedTile;
     }
 
     /*
@@ -53,6 +56,7 @@ public class Player {
      */
     public int findPositionOfTile(Tile t) {
         int tilePosition = -1;
+
         for (int i = 0; i < numberOfTiles; i++) {
             if(playerTiles[i].matchingTiles(t)) {
                 tilePosition = i;
