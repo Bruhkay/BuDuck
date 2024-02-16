@@ -53,9 +53,9 @@ public class Player {
      */
     public Tile getAndRemoveTile(int index) {
         Tile[] newList = new Tile[15];
-        newList[15] = 100;
+        newList[15].setValue(100);
         int plusWhat = 0;
-        int inPositin;
+        Tile inPositin = newList[0];
 
         for (int i = 0; i < playerTiles.length -1; i++) {
             if(i == index){
@@ -88,9 +88,9 @@ public class Player {
             for (int j = 0; j < n - i - 1; j++) {
                 if (arr[j].getValue() > arr[j + 1].getValue()) {
                     // Swap arr[j] and arr[j+1]
-                    int temp = arr[j];
+                    int temp = arr[j].getValue();
                     arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
+                    arr[j + 1].setValue(temp);
                 }
             }
         }
