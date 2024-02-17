@@ -1,3 +1,4 @@
+import java.util.*;
 public class SimplifiedOkeyGame {
 
     Player[] players;
@@ -32,7 +33,12 @@ public class SimplifiedOkeyGame {
      * other players get 14 tiles, this method assumes the tiles are already shuffled
      */
     public void distributeTilesToPlayers() {
-
+        this.shuffleTiles();
+        for (Player player : players) {
+            int i = 0;
+            player.addTile(tiles[i]);
+            i ++;
+        }
     }
 
     /*
@@ -58,7 +64,13 @@ public class SimplifiedOkeyGame {
      * TODO: should randomly shuffle the tiles array before game starts
      */
     public void shuffleTiles() {
-
+        Random random = new Random();
+        for (int i = 0; i < tileCount; i++) {
+            int r = random.nextInt(tiles.length + 1);
+            int temp = tiles[i].getValue();
+            tiles[i].setValue(tiles[r].getValue()); 
+            tiles[r].setValue(temp);
+        }
     }
 
     /*
