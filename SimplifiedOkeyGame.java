@@ -47,7 +47,9 @@ public class SimplifiedOkeyGame {
      * it should return the toString method of the tile so that we can print what we picked
      */
     public String getLastDiscardedTile() {
-        return null;
+        Tile t = lastDiscardedTile;
+        players[currentPlayerIndex].addTile(t);
+        return t.toString();
     }
 
     /*
@@ -57,7 +59,10 @@ public class SimplifiedOkeyGame {
      * returns the toString method of the tile so that we can print what we picked
      */
     public String getTopTile() {
-        return null;
+        Tile t = tiles[tileCount -1];
+        tiles[tileCount-1] = null;
+        players[currentPlayerIndex].addTile(t);
+        return t.toString();
     }
 
     /*
