@@ -3,7 +3,7 @@
  * Each tile has its own value.
  * This program can compare tiles for whether they are same or not, detect whether they can form a chain or not.
  * 
- * @authors ATAKAN KAYA, BURKAY TUNCTURK, ECE SESEN, MELIKE KARA, MERT SUCI
+ * @author ATAKAN KAYA, BURKAY TUNCTURK, ECE SESEN, MELIKE KARA, MERT SUCI
  * @version 18.02.2024
  * 
  */

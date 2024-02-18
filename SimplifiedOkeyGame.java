@@ -1,3 +1,11 @@
+/**
+ * This is a Okey Game class.
+ * It contains crucial mthods for playing game such as distributing tiles to players, getting last discarded tile or from pile.
+ * 
+ * @author ATAKAN KAYA, BURKAY TUNCTURK, ECE SESEN, MELIKE KARA, MERT SUCI
+ * @version 18.02.2024
+ */
+
 import java.util.*;
 public class SimplifiedOkeyGame {
 
@@ -35,7 +43,6 @@ public class SimplifiedOkeyGame {
      * other players get 14 tiles, this method assumes the tiles are already shuffled
      */
     public void distributeTilesToPlayers() {
-        this.shuffleTiles();
         for (Player player : players) {
             int i = 0;
             player.addTile(tiles[i]);
@@ -96,52 +103,11 @@ public class SimplifiedOkeyGame {
                 winners[0] = p;
                 temp = p.findLongestChain();
             } else if (p.findLongestChain() == temp) {
-                winners = new Player[2]; // Sırayla chainler 12 12 13 olunca yanlış sonuç veemiyor mu????
+                winners = new Player[2]; // Sırayla chainler 5 5 7 olunca yanlış sonuç veemiyor mu????
             }
         }
         return winners;
     }
-
-    
-     /**
-      * Finds the players who have the longest chain
-      * @return winners
-      */
-    /*public Player[] getPlayerWithHighestLongestChainTRY() 
-    {
-        int longestEver = this.totalLongestChain(players);
-        Player[] winners = new Player[4];
-        int currentWinner = 0;
-        for(int i = 0; i < players.length; i++)
-        {
-            if(players[i].findLongestChain() == longestEver);
-            {
-                winners[currentWinner] = players[i];
-                currentWinner++;
-            }
-        }
-        return winners;
-    }
-
-    /**
-     * Compares all players' longest chain and return longest one
-     * @param players all players in the game
-     * @return longest chainn ever
-     */
-    /*public int totalLongestChain(Player[] players)
-    {
-        int longest = players[0].findLongestChain();
-        for(int i = 1; i < players.length; i++)
-        {
-            if(players[i].findLongestChain() > longest)
-            {
-                longest = players[i].findLongestChain();
-            }
-        }
-        return longest;
-    }*/
-    
-
 
     /**
      * Checks if there are more tiles on the stack to continue the game

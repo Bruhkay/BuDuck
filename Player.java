@@ -7,8 +7,8 @@
  * @author ATAKAN KAYA, BURKAY TUNCTURK, ECE SESEN, MELIKE KARA, MERT SUCI
  * @version 18.02.2024
  */
-import java.util.*;
 
+import java.util.*;
 public class Player {
     String playerName;
     Tile[] playerTiles;
@@ -39,7 +39,7 @@ public class Player {
                     break;
                 } else {
                     won = false;
-                } 
+                }
             }
         }
         return won;
@@ -141,6 +141,7 @@ public class Player {
     public void addTile(Tile t) {
         playerTiles[playerTiles.length - 1] = t;
         this.bubbleSort(playerTiles);
+        
     }
 
     /**
