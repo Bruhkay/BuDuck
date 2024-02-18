@@ -1,3 +1,12 @@
+/**
+ * This is a Player class.
+ * Each player has their own list of tiles, name and amount of tile.
+ * This class can determine whether a player has won or not. 
+ * It can also finds the longest chain in list of tiles and determines whether the getting tile is useful or not.
+ * 
+ * @author ATAKAN KAYA, BURKAY TUNCTURK, ECE SESEN, MELIKE KARA, MERT SUCI
+ * @version 18.02.2024
+ */
 import java.util.*;
 
 public class Player {
@@ -11,12 +20,12 @@ public class Player {
         numberOfTiles = 0; // currently this player owns 0 tiles, will pick tiles at the beggining of the game
     }
 
-    /*
-     * TODO: checks this player's hand to determine if this player is winning
-     * the player with a complete chain of 14 consecutive numbers wins the game
-     * note that the player whose turn is now draws one extra tile to have 15 tiles in hand,
-     * and the extra tile does not disturb the longest chain and therefore the winning condition
-     * check the assigment text for more details on winning condition
+    /**
+     * Checks this player's hand to determine if this player is winning. 
+     * The player with a complete chain of 14 consecutive numbers wins the game
+     * Note that the player whose turn is now draws one extra tile to have 15 tiles in hand, 
+     * and the extra tile does not disturb the longest chain and therefore the winning condition.
+     * @return whether player won or not
      */
     public boolean checkWinning() {
         boolean won = true;
@@ -30,25 +39,23 @@ public class Player {
                     break;
                 } else {
                     won = false;
-                }
+                } 
             }
         }
         return won;
     }
     
-
-    /*
-     * TODO: used for finding the longest chain in this player hand
-     * this method should iterate over playerTiles to find the longest chain
-     * of consecutive numbers, used for checking the winning condition
-     * and also for determining the winner if tile stack has no tiles
+    /**
+     * Finds the longest chain of consecutive numbers in this player hand by iterating over playerTiles 
+     * @return length of longest chain -1
      */
     public int findLongestChain() {
         int longestChain = 0;
         int currentlylongestChain = 0;
+        this.bubbleSort(playerTiles);
 
         for (int i = 0; i < playerTiles.length - 1; i++) {
-            if (playerTiles[i].getValue() == playerTiles[i+1].getValue() +1){
+            if (playerTiles[i].getValue() + 1 == playerTiles[i+1].getValue()){
                 currentlylongestChain += 1;
             }
             else{
@@ -58,39 +65,39 @@ public class Player {
                 currentlylongestChain = 0;
             }
         }
-
         return longestChain;
     }
 
     public Tile[] usefulTiles() {
 
         int longestChain = findLongestChain();
-        Tile[] usefuTiles = new Tile[longestChain];
+        Tile[] usefulTiles = new Tile[longestChain];
         for (int i = 0; i < playerTiles.length; i++) {
-            if (playerTiles[i].getValue() - playerTiles[i - longestChain].getValue() == longestChain) {
+            if (playerTiles[i].getValue() - playerTiles[i - longestChain].getValue() == longestChain) { // (i-longestChain < 0) oluyor. Index hatası???
                 for (int j = 0; j < longestChain; j++) {
-                    usefuTiles[j] = playerTiles[i - longestChain + j];
+                    usefulTiles[j] = playerTiles[i - longestChain + j];
                 }
             }
         }
-        return usefuTiles;
+        return usefulTiles;
     }
 
-    /*
-     * checks if the tile makes the longest chain longer or not to decide
-     * its usefulness.
+    /**
+     * Checks if the tile makes the longest chain longer or not. Decides its usefulness.
+     * @param a given tile
+     * @return true if given tile creates longer chain compared the recent one
      */
     public boolean isUseful(Tile a) {
 
         Tile[] tempArray = new Tile[playerTiles.length + 1];
         System.arraycopy(playerTiles, 0, tempArray, 0, playerTiles.length);
         tempArray[tempArray.length-1] = a;
-        Arrays.sort(tempArray); 
+        this.bubbleSort(tempArray);
         int longestChain = 0;
         int currentlylongestChain = 0;
 
         for (int i = 0; i < tempArray.length - 1; i++) {
-            if (tempArray[i].getValue() == tempArray[i+1].getValue() +1){
+            if (tempArray[i].getValue() + 1 == tempArray[i+1].getValue()){
                 currentlylongestChain += 1;
             }
             else{
@@ -103,40 +110,43 @@ public class Player {
         return longestChain > findLongestChain();
     }
 
-    /*
-     * TODO: removes and returns the tile in given index position
+    /**
+     * Removes and returns the tile in given index position
+     * @param index of removed tile
+     * @return removed tile
      */
     public Tile getAndRemoveTile(int index) {
         Tile[] newList = new Tile[15];
-        newList[15].setValue(100);
+        newList[14].setValue(100);
         int plusWhat = 0;
-        Tile inPositin = newList[0];
+        Tile inPosition = newList[0];
 
         for (int i = 0; i < playerTiles.length -1; i++) {
             if(i == index){
                 plusWhat = 1;
-                inPositin = playerTiles[i];
+                inPosition = playerTiles[i];
             }
-            else{
-                newList[i + plusWhat] = playerTiles[i];
-            }
+            newList[i] = playerTiles[i + plusWhat]; //Bence bu kodda plusWhat'a gerek yok. Zaten i arttıkça index de atlanmış oluyor.
+            
         }
-
         playerTiles = newList;
 
-        return inPositin;
+        return inPosition;
     }
 
-    /*
-     * TODO: adds the given tile to this player's hand keeping the ascending order
-     * this requires you to loop over the existing tiles to find the correct position,
-     * then shift the remaining tiles to the right by one
+    /**
+     * Adds the given tile to this player's tiles list keeping the ascending order
+     * @param t given tile
      */
     public void addTile(Tile t) {
         playerTiles[playerTiles.length - 1] = t;
         this.bubbleSort(playerTiles);
     }
 
+    /**
+     * Put tiles in ascending order.
+     * @param arr tiles list
+     */
     private void bubbleSort(Tile[] arr) {
         int n = arr.length;
         for (int i = 0; i < n - 1; i++) {
@@ -144,16 +154,18 @@ public class Player {
                 if (arr[j].getValue() > arr[j + 1].getValue()) {
                     // Swap arr[j] and arr[j+1]
                     int temp = arr[j].getValue();
-                    arr[j] = arr[j + 1];
+                    arr[j].setValue(arr[j+1].getValue()); 
                     arr[j + 1].setValue(temp);
                 }
             }
         }
     }
 
-    /*
-     * finds the index for a given tile in this player's hand
-     */
+   /**
+    * Finds the index for a given tile in this player's hand
+    * @param t given tile
+    * @return index
+    */
     public int findPositionOfTile(Tile t) {
         int tilePosition = -1;
         for (int i = 0; i < numberOfTiles; i++) {
@@ -164,8 +176,8 @@ public class Player {
         return tilePosition;
     }
 
-    /*
-     * displays the tiles of this player
+    /**
+     * Displays the tiles of this player
      */
     public void displayTiles() {
         System.out.println(playerName + "'s Tiles:");
@@ -175,14 +187,26 @@ public class Player {
         System.out.println();
     }
 
+    /**
+     * Give the all the tiles that player has
+     * @return tiles list
+     */
     public Tile[] getTiles() {
         return playerTiles;
     }
 
+    /**
+     * Set the player's name
+     * @param name player name
+     */
     public void setName(String name) {
         playerName = name;
     }
 
+    /**
+     * Get the player's name
+     * @return name
+     */
     public String getName() {
         return playerName;
     }

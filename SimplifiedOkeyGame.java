@@ -13,17 +13,19 @@ public class SimplifiedOkeyGame {
         players = new Player[4];
     }
 
+    /**
+     * Creates tile with four copies of each value, no jokers
+     */
     public void createTiles() {
         tiles = new Tile[104];
         int currentTile = 0;
 
-        // four copies of each value, no jokers
         for (int i = 1; i <= 26; i++) {
             for (int j = 0; j < 4; j++) {
-                tiles[currentTile++] = new Tile(i);
+                tiles[currentTile] = new Tile(i);
+                currentTile++;
             }
         }
-
         tileCount = 104;
     }
 
@@ -41,10 +43,9 @@ public class SimplifiedOkeyGame {
         }
     }
 
-    /*
-     * TODO: get the last discarded tile for the current player
-     * (this simulates picking up the tile discarded by the previous player)
-     * it should return the toString method of the tile so that we can print what we picked
+    /**
+     * This simulates picking up the tile discarded by the previous player (get the last discarded tile for the current player)
+     * @return the toString method of the tile so that we can print what we picked
      */
     public String getLastDiscardedTile() {
         Tile t = lastDiscardedTile;
@@ -52,11 +53,9 @@ public class SimplifiedOkeyGame {
         return t.toString();
     }
 
-    /*
-     * TODO: get the top tile from tiles array for the current player
-     * that tile is no longer in the tiles array (this simulates picking up the top tile)
-     * and it will be given to the current player
-     * returns the toString method of the tile so that we can print what we picked
+    /**
+     * Get the top tile from tiles array for the current player (that tile is no longer in the tiles array)
+     * @return the toString method of the tile so that we can print what we picked
      */
     public String getTopTile() {
         Tile t = tiles[tileCount -1];
@@ -65,8 +64,8 @@ public class SimplifiedOkeyGame {
         return t.toString();
     }
 
-    /*
-     * TODO: should randomly shuffle the tiles array before game starts
+    /**
+     * Randomly shuffle the tiles array before game starts
      */
     public void shuffleTiles() {
         Random random = new Random();
@@ -78,9 +77,9 @@ public class SimplifiedOkeyGame {
         }
     }
 
-    /*
-     * TODO: check if game still continues, should return true if current player
-     * finished the game. use checkWinning method of the player class to determine
+    /**
+     * Check if game still continues
+     * @return true if current player finished the game.
      */
     public boolean didGameFinish() {
         return players[currentPlayerIndex].checkWinning();
@@ -97,26 +96,65 @@ public class SimplifiedOkeyGame {
                 winners[0] = p;
                 temp = p.findLongestChain();
             } else if (p.findLongestChain() == temp) {
-                winners = new Player[2];
-                winners[1] = p;
+                winners = new Player[2]; // Sırayla chainler 12 12 13 olunca yanlış sonuç veemiyor mu????
             }
         }
         return winners;
     }
+
     
-    /*
-     * checks if there are more tiles on the stack to continue the game
+     /**
+      * Finds the players who have the longest chain
+      * @return winners
+      */
+    /*public Player[] getPlayerWithHighestLongestChainTRY() 
+    {
+        int longestEver = this.totalLongestChain(players);
+        Player[] winners = new Player[4];
+        int currentWinner = 0;
+        for(int i = 0; i < players.length; i++)
+        {
+            if(players[i].findLongestChain() == longestEver);
+            {
+                winners[currentWinner] = players[i];
+                currentWinner++;
+            }
+        }
+        return winners;
+    }
+
+    /**
+     * Compares all players' longest chain and return longest one
+     * @param players all players in the game
+     * @return longest chainn ever
+     */
+    /*public int totalLongestChain(Player[] players)
+    {
+        int longest = players[0].findLongestChain();
+        for(int i = 1; i < players.length; i++)
+        {
+            if(players[i].findLongestChain() > longest)
+            {
+                longest = players[i].findLongestChain();
+            }
+        }
+        return longest;
+    }*/
+    
+
+
+    /**
+     * Checks if there are more tiles on the stack to continue the game
+     * @return true if there is tiles on the stack
      */
     public boolean hasMoreTileInStack() {
         return tileCount != 0;
     }
 
-    /*
-     * TODO: pick a tile for the current computer player using one of the following:
-     * - picking from the tiles array using getTopTile()
-     * - picking from the lastDiscardedTile using getLastDiscardedTile()
-     * you should check if getting the discarded tile is useful for the computer
-     * by checking if it increases the longest chain length, if not get the top tile
+   
+    /**
+     * Pick a tile for the current computer player using useful one:
+     * Whİch can be picking new tile or getting last discarded tile. 
      */
     public void pickTileForComputer() {
         if (players[currentPlayerIndex].isUseful(lastDiscardedTile)) {
@@ -126,9 +164,8 @@ public class SimplifiedOkeyGame {
         }
     }
 
-    /*
-     * TODO: Current computer player will discard the least useful tile.
-     * you may choose based on how useful each tile is
+    /**
+     * Current computer player will discard the least useful tile. You may choose based on how useful each tile is
      */
     @SuppressWarnings("unused")   // nothing important, about the incrementation.
     public void discardTileForComputer() {
@@ -143,43 +180,63 @@ public class SimplifiedOkeyGame {
         }
     }
 
-    /*
-     * TODO: discards the current player's tile at given index
-     * this should set lastDiscardedTile variable and remove that tile from
-     * that player's tiles
+    /**
+     * Discards the current player's tile at given index
+     * This should set lastDiscardedTile variable and remove that tile from
+     * @param tileIndex discarded tile index
      */
     public void discardTile(int tileIndex) {
         lastDiscardedTile = players[currentPlayerIndex].playerTiles[tileIndex];
         players[currentPlayerIndex].getAndRemoveTile(tileIndex);
-
     }
 
+    /**
+     * Shows the information about last discarded tile
+     */
     public void displayDiscardInformation() {
         if(lastDiscardedTile != null) {
             System.out.println("Last Discarded: " + lastDiscardedTile.toString());
         }
     }
 
+    /**
+     * Displays the current player's tile list
+     */
     public void displayCurrentPlayersTiles() {
         players[currentPlayerIndex].displayTiles();
     }
 
+    /**
+     * Give the current player's index
+     * @return index
+     */
     public int getCurrentPlayerIndex() {
         return currentPlayerIndex;
     }
 
+    /**
+     * Give the current player's name
+     * @return name
+     */
       public String getCurrentPlayerName() {
         return players[currentPlayerIndex].getName();
     }
 
+    /**
+     * Turn is passed to following player
+     */
     public void passTurnToNextPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % 4;
     }
 
+    /**
+     * Create a new player with given name and index location
+     * @param index of the player in the players' list
+     * @param name player's name
+     */
     public void setPlayerName(int index, String name) {
         if(index >= 0 && index <= 3) {
             players[index] = new Player(name);
         }
     }
-
 }
