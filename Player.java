@@ -19,9 +19,23 @@ public class Player {
      * check the assigment text for more details on winning condition
      */
     public boolean checkWinning() {
-        // STILL NEEDS
-        return false;
+        boolean won = true;
+        for (int i = 1; i <= 14; i++) {
+            if (won == false) {
+                return false;
+            }
+            for (int j = 0; j < playerTiles.length; j++) {
+                if (playerTiles[j].getValue() == i) {
+                    won = true;
+                    break;
+                } else {
+                    won = false;
+                }
+            }
+        }
+        return won;
     }
+    
 
     /*
      * TODO: used for finding the longest chain in this player hand

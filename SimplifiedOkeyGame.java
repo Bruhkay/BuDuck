@@ -83,7 +83,11 @@ public class SimplifiedOkeyGame {
      * finished the game. use checkWinning method of the player class to determine
      */
     public boolean didGameFinish() {
-        return false;
+        if (players[currentPlayerIndex].checkWinning()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /* TODO: finds the player who has the highest number for the longest chain
@@ -91,7 +95,16 @@ public class SimplifiedOkeyGame {
      */
     public Player[] getPlayerWithHighestLongestChain() {
         Player[] winners = new Player[1];
-
+        int temp = 0;
+        for (Player p : players) {
+            if (p.findLongestChain() > temp) {
+                winners[0] = p;
+                temp = p.findLongestChain();
+            } else if (p.findLongestChain() == temp) {
+                winners = new Player[2];
+                winners[1] = p;
+            }
+        }
         return winners;
     }
     
@@ -110,7 +123,8 @@ public class SimplifiedOkeyGame {
      * by checking if it increases the longest chain length, if not get the top tile
      */
     public void pickTileForComputer() {
-
+  
+        
     }
 
     /*
@@ -127,6 +141,8 @@ public class SimplifiedOkeyGame {
      * that player's tiles
      */
     public void discardTile(int tileIndex) {
+        lastDiscardedTile = players[currentPlayerIndex].playerTiles[tileIndex];
+        players[currentPlayerIndex].getAndRemoveTile(tileIndex);
 
     }
 
