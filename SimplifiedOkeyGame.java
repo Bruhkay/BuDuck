@@ -71,7 +71,7 @@ public class SimplifiedOkeyGame {
     public void shuffleTiles() {
         Random random = new Random();
         for (int i = 0; i < tileCount; i++) {
-            int r = random.nextInt(tiles.length + 1);
+            int r = random.nextInt(tiles.length);
             int temp = tiles[i].getValue();
             tiles[i].setValue(tiles[r].getValue()); 
             tiles[r].setValue(temp);
@@ -83,11 +83,7 @@ public class SimplifiedOkeyGame {
      * finished the game. use checkWinning method of the player class to determine
      */
     public boolean didGameFinish() {
-        if (players[currentPlayerIndex].checkWinning()) {
-            return true;
-        } else {
-            return false;
-        }
+        return players[currentPlayerIndex].checkWinning();
     }
 
     /* TODO: finds the player who has the highest number for the longest chain
@@ -123,16 +119,28 @@ public class SimplifiedOkeyGame {
      * by checking if it increases the longest chain length, if not get the top tile
      */
     public void pickTileForComputer() {
-  
-        
+        if (players[currentPlayerIndex].isUseful(lastDiscardedTile)) {
+            getLastDiscardedTile();
+        } else {
+            getTopTile();
+        }
     }
 
     /*
      * TODO: Current computer player will discard the least useful tile.
      * you may choose based on how useful each tile is
      */
+    @SuppressWarnings("unused")   // nothing important, about the incrementation.
     public void discardTileForComputer() {
-
+        for (int i = 0; i < players[currentPlayerIndex].playerTiles.length; i++) {
+            for (Tile t : players[currentPlayerIndex].usefulTiles()) {
+                if (players[currentPlayerIndex].playerTiles[i] == t) {
+                break;
+                } 
+            }
+            players[currentPlayerIndex].getAndRemoveTile(i);
+            break;
+        }
     }
 
     /*

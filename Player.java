@@ -62,6 +62,47 @@ public class Player {
         return longestChain;
     }
 
+    public Tile[] usefulTiles() {
+
+        int longestChain = findLongestChain();
+        Tile[] usefuTiles = new Tile[longestChain];
+        for (int i = 0; i < playerTiles.length; i++) {
+            if (playerTiles[i].getValue() - playerTiles[i - longestChain].getValue() == longestChain) {
+                for (int j = 0; j < longestChain; j++) {
+                    usefuTiles[j] = playerTiles[i - longestChain + j];
+                }
+            }
+        }
+        return usefuTiles;
+    }
+
+    /*
+     * checks if the tile makes the longest chain longer or not to decide
+     * its usefulness.
+     */
+    public boolean isUseful(Tile a) {
+
+        Tile[] tempArray = new Tile[playerTiles.length + 1];
+        System.arraycopy(playerTiles, 0, tempArray, 0, playerTiles.length);
+        tempArray[tempArray.length-1] = a;
+        Arrays.sort(tempArray); 
+        int longestChain = 0;
+        int currentlylongestChain = 0;
+
+        for (int i = 0; i < tempArray.length - 1; i++) {
+            if (tempArray[i].getValue() == tempArray[i+1].getValue() +1){
+                currentlylongestChain += 1;
+            }
+            else{
+                if(currentlylongestChain > longestChain){
+                    longestChain = currentlylongestChain;
+                }
+                currentlylongestChain = 0;
+            }
+        }
+        return longestChain > findLongestChain();
+    }
+
     /*
      * TODO: removes and returns the tile in given index position
      */
