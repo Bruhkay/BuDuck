@@ -139,7 +139,7 @@ public class Player {
      * @param t given tile
      */
     public void addTile(Tile t) {
-        playerTiles[playerTiles.length - 1] = t;
+        this.playerTiles[this.playerTiles.length - 1] = t;
         this.bubbleSort(playerTiles);
         
     }
@@ -170,7 +170,7 @@ public class Player {
     public int findPositionOfTile(Tile t) {
         int tilePosition = -1;
         for (int i = 0; i < numberOfTiles; i++) {
-            if(playerTiles[i].matchingTiles(t)) {
+            if(this.playerTiles[i].matchingTiles(t)) {
                 tilePosition = i;
             }
         }
@@ -193,7 +193,7 @@ public class Player {
      * @return tiles list
      */
     public Tile[] getTiles() {
-        return playerTiles;
+        return this.playerTiles;
     }
 
     /**
@@ -201,7 +201,7 @@ public class Player {
      * @param name player name
      */
     public void setName(String name) {
-        playerName = name;
+        this.playerName = name;
     }
 
     /**
@@ -209,6 +209,6 @@ public class Player {
      * @return name
      */
     public String getName() {
-        return playerName;
+        return this.playerName;
     }
 }
