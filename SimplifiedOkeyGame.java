@@ -43,11 +43,19 @@ public class SimplifiedOkeyGame {
      * other players get 14 tiles, this method assumes the tiles are already shuffled
      */
     public void distributeTilesToPlayers() {
+        int j = 0;
+        Tile[] a;
         for (Player player : players) {
-            int i = 0;
-            player.addTile(tiles[i]);
-            i ++;
+            a = new Tile[14];
+            for(int i = 0; i < 14; i++){
+                a[i] = tiles[j];
+                j++;
+            }
+            player.initializeDeck(a);
         }
+        players[0].addTile(tiles[j++]);
+
+        // !! arrayden dagıtılanları düş
     }
 
     /**

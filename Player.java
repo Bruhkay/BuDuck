@@ -47,7 +47,7 @@ public class Player {
     
     /**
      * Finds the longest chain of consecutive numbers in this player hand by iterating over playerTiles 
-     * @return length of longest chain -1
+     * @return length of longest chain
      */
     public int findLongestChain() {
         int longestChain = 0;
@@ -65,8 +65,10 @@ public class Player {
                 currentlylongestChain = 0;
             }
         }
-        return longestChain;
+        return longestChain + 1;
     }
+
+    
 
     public Tile[] usefulTiles() {
 
@@ -117,6 +119,9 @@ public class Player {
      */
     public Tile getAndRemoveTile(int index) {
         Tile[] newList = new Tile[15];
+        for (int i = 0; i < newList.length; i++) {
+            newList[i] = new Tile(-1);
+        }
         newList[14].setValue(100);
         int plusWhat = 0;
         Tile inPosition = newList[0];
@@ -131,6 +136,8 @@ public class Player {
         }
         playerTiles = newList;
 
+        numberOfTiles --;
+
         return inPosition;
     }
 
@@ -139,9 +146,17 @@ public class Player {
      * @param t given tile
      */
     public void addTile(Tile t) {
+        
         this.playerTiles[this.playerTiles.length - 1] = t;
+        numberOfTiles ++;
         this.bubbleSort(playerTiles);
         
+    }
+
+    public void initializeDeck(Tile[] tiles){
+        playerTiles = tiles;
+        numberOfTiles = 13;
+        this.bubbleSort(tiles);
     }
 
     /**
@@ -183,7 +198,7 @@ public class Player {
     public void displayTiles() {
         System.out.println(playerName + "'s Tiles:");
         for (int i = 0; i < numberOfTiles; i++) {
-            System.out.print(playerTiles[i].toString() + " ");
+            System.out.print(playerTiles[i].toString() + ", ");
         }
         System.out.println();
     }
