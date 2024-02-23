@@ -106,12 +106,19 @@ public class SimplifiedOkeyGame {
     public Player[] getPlayerWithHighestLongestChain() {
         Player[] winners = new Player[1];
         int temp = 0;
-        for (Player p : players) {
-            if (p.findLongestChain() > temp) {
-                winners[0] = p;
-                temp = p.findLongestChain();
-            } else if (p.findLongestChain() == temp) {
-                winners = new Player[2]; // Sırayla chainler 5 5 7 olunca yanlış sonuç veemiyor mu????
+        int counter = 0;
+        for (int i = 0; i < players.length; i++) {
+            if (players[i].findLongestChain() > temp) {
+                temp = players[i].findLongestChain();       
+            }
+        }
+        for (int j = 0; j < players.length; j++) {
+            if (players[j].findLongestChain() == temp) {
+                counter++;
+                if (counter > 1) {
+                    winners = new Player[counter];
+                }
+                winners[j] = players[j];
             }
         }
         return winners;
