@@ -74,10 +74,14 @@ public class Player {
 
         int longestChain = findLongestChain();
         Tile[] usefulTiles = new Tile[longestChain];
-        for (int i = 0; i < playerTiles.length; i++) {
-            if (playerTiles[i].getValue() - playerTiles[i - longestChain].getValue() == longestChain) { // (i-longestChain < 0) oluyor. Index hatası???
+        int counter = 1;
+        for (int i = 0; i < playerTiles.length - 1; i++){
+            if (playerTiles[i].getValue() + 1 == playerTiles[i+1].getValue()) {
+                counter++;
+            } else { counter = 1;}
+            if (counter == longestChain) {
                 for (int j = 0; j < longestChain; j++) {
-                    usefulTiles[j] = playerTiles[i - longestChain + j];
+                    usefulTiles[j] = playerTiles[i + 2 - counter + j];
                 }
             }
         }
