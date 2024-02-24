@@ -54,7 +54,7 @@ public class SimplifiedOkeyGame {
             player.initializeDeck(a);
         }
         players[0].addTile(tiles[j++]);
-
+        tileCount -= j;
         // !! arrayden dagıtılanları düş
     }
 
@@ -76,8 +76,9 @@ public class SimplifiedOkeyGame {
         Tile t = tiles[tileCount -1];
         tiles[tileCount-1] = null;
         tileCount--;
+        String a = t.toString();
         players[currentPlayerIndex].addTile(t);
-        return t.toString();
+        return a;
     }
 
     /**
@@ -103,6 +104,14 @@ public class SimplifiedOkeyGame {
 
     /* TODO: finds the player who has the highest number for the longest chain
      * if multiple players have the same length may return multiple players
+     * 
+     * !!! Kod için Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 1 out of boun bounds for length 1
+ bounds for length 1
+        at SimplifiedOkeyGame.getPlayerWithHighestLongestChain(SimplifiedOkeyGame.java:123)
+        at ApplicationMain.getWinnerDeck(ApplicationMain.java:129)
+        at ApplicationMain.main(ApplicationMain.java:117)
+
+     * Hatası veriyor, yazarın elinden öper
      */
     public Player[] getPlayerWithHighestLongestChain() {
         Player[] winners = new Player[1];
@@ -151,6 +160,8 @@ public class SimplifiedOkeyGame {
      */
     @SuppressWarnings("unused")   // nothing important, about the incrementation.
     public void discardTileForComputer() {
+        ArrayList<Integer> possibilities = new ArrayList<>();
+        
         for (int i = 0; i < players[currentPlayerIndex].playerTiles.length; i++) {
             for (Tile t : players[currentPlayerIndex].usefulTiles()) {
                 if (players[currentPlayerIndex].playerTiles[i] == t) {
@@ -160,6 +171,9 @@ public class SimplifiedOkeyGame {
             players[currentPlayerIndex].getAndRemoveTile(i);
             break;
         }
+
+        Random rand = new Random();
+        lastDiscardedTile = tiles[rand.nextInt(14)];
     }
 
     /**

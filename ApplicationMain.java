@@ -54,11 +54,11 @@ public class ApplicationMain {
 
                 // after the first turn we can pick up
                 if(!firstTurn) {
-                    if(playerChoice == 1) {
+                    if(playerChoice <= 1) {
                         System.out.println("You picked up: " + game.getTopTile());
                         firstTurn = false;
                     }
-                    else if(playerChoice == 2) {
+                    else if(playerChoice > 1) {
                         System.out.println("You picked up: " + game.getLastDiscardedTile());
                     }
 
@@ -78,8 +78,6 @@ public class ApplicationMain {
                     System.out.print("Discard the tile in index: ");
                     playerChoice = sc.nextInt();
 
-                    // TODO: make sure the given index is correct, should be 0 <= index <= 14
-
                     game.discardTile(playerChoice);
                     game.passTurnToNextPlayer();
                 }
@@ -89,9 +87,7 @@ public class ApplicationMain {
                         System.out.println("Congratulations, you win!");    
                     }
                     else{
-                        // TODO: the game ended with no more tiles in the stack
-                        // determine the winner based on longest chain lengths of the players
-                        // use getPlayerWithHighestLongestChain method of game for this task
+                        getWinnerDeck(game);
                     }
                 }
             }
@@ -112,19 +108,34 @@ public class ApplicationMain {
                     game.passTurnToNextPlayer();
                 }
                 else{
-                    if(!game.didGameFinish()) {
+                    if(game.didGameFinish()) {
                         // current computer character wins
+                        System.out.println("Whuddp boi.");
                         System.out.println(game.getCurrentPlayerName() + " wins.");
                     }
                     else{
-                        // TODO: the game ended with no more tiles in the stack
-                        // determine the winner based on longest chain lengths of the players
-                        // use getPlayerWithHighestLongestChain method of game for this task
+                        getWinnerDeck(game);
                     }
                 }
             }
         }
 
         sc.close();
+    }
+
+    private static void getWinnerDeck(SimplifiedOkeyGame game) {
+        // determine the winner based on longest chain lengths of the players
+        // use getPlayerWithHighestLongestChain method of game for this task
+        Player[] winnerDeck = game.getPlayerWithHighestLongestChain();
+        if( winnerDeck.length == 1){
+            System.out.println("Winner is: " + winnerDeck[0].toString());
+        }
+        else{
+            System.out.print("The winners are: ");
+            for (Player winner: winnerDeck) {
+                System.out.print("           " + winner.toString() + "               ");
+            }
+            System.out.println();
+        }
     }
 }
