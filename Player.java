@@ -73,7 +73,10 @@ public class Player {
     }
 
     
-
+    /**
+     * Finds the tiles that creates the longest chain
+     * @return tile array
+     */
     public Tile[] usefulTiles() {
 
         int longestChain = findLongestChain();
