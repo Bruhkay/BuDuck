@@ -45,7 +45,7 @@ public class Player {
         }
         return won; */
 
-        return 6 <= this.findLongestChain();
+        return 14 == this.findLongestChain();
     }
     
     /**
