@@ -75,6 +75,7 @@ public class SimplifiedOkeyGame {
     public String getTopTile() {
         Tile t = tiles[tileCount -1];
         tiles[tileCount-1] = null;
+        tileCount--;
         players[currentPlayerIndex].addTile(t);
         return t.toString();
     }
