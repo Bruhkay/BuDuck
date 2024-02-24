@@ -28,7 +28,8 @@ public class Player {
      * @return whether player won or not
      */
     public boolean checkWinning() {
-        boolean won = true;
+        /* boolean won = true;
+        // 14 değerini değiştridim ki kontrol edebileyim
         for (int i = 1; i <= 14; i++) {
             if (won == false) {
                 return false;
@@ -42,7 +43,9 @@ public class Player {
                 }
             }
         }
-        return won;
+        return won; */
+
+        return 6 <= this.findLongestChain();
     }
     
     /**
@@ -65,6 +68,7 @@ public class Player {
                 currentlylongestChain = 0;
             }
         }
+
         return longestChain + 1;
     }
 
@@ -122,44 +126,48 @@ public class Player {
      * @return removed tile
      */
     public Tile getAndRemoveTile(int index) {
-        Tile[] newList = new Tile[15];
+        Tile[] newList = new Tile[14];
         for (int i = 0; i < newList.length; i++) {
             newList[i] = new Tile(-1);
         }
-        newList[14].setValue(100);
+        newList[13].setValue(100);
         int plusWhat = 0;
         Tile inPosition = newList[0];
 
-        for (int i = 0; i < playerTiles.length -1; i++) {
+        for (int i = 0; i < 14; i++) {
             if(i == index){
                 plusWhat = 1;
                 inPosition = playerTiles[i];
             }
-            newList[i] = playerTiles[i + plusWhat]; //Bence bu kodda plusWhat'a gerek yok. Zaten i arttıkça index de atlanmış oluyor.
+            newList[i] = playerTiles[i+plusWhat]; //Bence bu kodda plusWhat'a gerek yok. Zaten i arttıkça index de atlanmış oluyor.
             
         }
         playerTiles = newList;
 
-        numberOfTiles --;
+        numberOfTiles = 14;
 
         return inPosition;
     }
 
     /**
      * Adds the given tile to this player's tiles list keeping the ascending order
-     * @param t given tile
+     * @param addedTile given tile
      */
-    public void addTile(Tile t) {
+    public void addTile(Tile addedTile) {
         
-        this.playerTiles[this.playerTiles.length - 1] = t;
+        Tile[] modification = new Tile[playerTiles.length + 1];
+        for (int i = 0; i < playerTiles.length; i++) {
+            modification[i] = playerTiles[i];
+        }
+        modification[modification.length - 1] = addedTile;
         numberOfTiles ++;
-        this.bubbleSort(playerTiles);
-        
+        this.bubbleSort(modification);
+        playerTiles = modification;
     }
 
     public void initializeDeck(Tile[] tiles){
         playerTiles = tiles;
-        numberOfTiles = 13;
+        numberOfTiles = 14;
         this.bubbleSort(tiles);
     }
 
@@ -171,11 +179,11 @@ public class Player {
         int n = arr.length;
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
-                if (arr[j].getValue() > arr[j + 1].getValue()) { //bu kodda sikinti var
-                    // Swap arr[j] and arr[j+1]
-                    int temp = arr[j].getValue();
-                    arr[j].setValue(arr[j+1].getValue()); 
-                    arr[j + 1].setValue(temp);
+                if (arr[j].getValue() > arr[j + 1].getValue()) {
+                    // Swap arr[j] and arr[j+1] (swap the Tile objects)
+                    Tile temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
                 }
             }
         }
@@ -200,11 +208,16 @@ public class Player {
      * Displays the tiles of this player
      */
     public void displayTiles() {
+        //System.out.println(playerTilesplayerTiles.length-1] + "!!");
+        bubbleSort(playerTiles);
+        //System.out.println(playerTiles[playerTiles.length-1] + "!!!!");
+
         System.out.println(playerName + "'s Tiles:");
-        for (int i = 0; i < numberOfTiles; i++) {
+        for (int i = 0; i < playerTiles.length; i++) {
             System.out.print(playerTiles[i].toString() + ", ");
         }
         System.out.println();
+        System.out.println("Length: " + playerTiles.length);
     }
 
     /**
