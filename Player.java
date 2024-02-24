@@ -171,7 +171,7 @@ public class Player {
         int n = arr.length;
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
-                if (arr[j].getValue() > arr[j + 1].getValue()) {
+                if (arr[j].getValue() > arr[j + 1].getValue()) { //bu kodda sikinti var
                     // Swap arr[j] and arr[j+1]
                     int temp = arr[j].getValue();
                     arr[j].setValue(arr[j+1].getValue()); 
