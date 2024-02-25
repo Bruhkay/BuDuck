@@ -5,7 +5,7 @@
  * It can also finds the longest chain in list of tiles and determines whether the getting tile is useful or not.
  * 
  * @author ATAKAN KAYA, BURKAY TUNCTURK, ECE SESEN, MELIKE KARA, MERT SUCI
- * @version 18.02.2024
+ * @version 25.02.2024
  */
 
 import java.util.*;
@@ -28,24 +28,6 @@ public class Player {
      * @return whether player won or not
      */
     public boolean checkWinning() {
-        /* boolean won = true;
-        // 14 değerini değiştridim ki kontrol edebileyim
-        for (int i = 1; i <= 14; i++) {
-            if (won == false) {
-                return false;
-            }
-            for (int j = 0; j < playerTiles.length; j++) {
-                if (playerTiles[j].getValue() == i) {
-                    won = true;
-                    break;
-                } else {
-                    won = false;
-                }
-            }
-        }
-        return won; */
-
-
         return 14 == this.findLongestChain();
     }
     

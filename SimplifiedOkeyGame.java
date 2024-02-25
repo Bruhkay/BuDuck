@@ -3,7 +3,7 @@
  * It contains crucial mthods for playing game such as distributing tiles to players, getting last discarded tile or from pile.
  * 
  * @author ATAKAN KAYA, BURKAY TUNCTURK, ECE SESEN, MELIKE KARA, MERT SUCI
- * @version 18.02.2024
+ * @version 25.02.2024
  */
 
 import java.util.*;

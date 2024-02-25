@@ -4,7 +4,7 @@
  * This program can compare tiles for whether they are same or not, detect whether they can form a chain or not.
  * 
  * @author ATAKAN KAYA, BURKAY TUNCTURK, ECE SESEN, MELIKE KARA, MERT SUCI
- * @version 18.02.2024
+ * @version 25.02.2024
  * 
  */
 public class Tile {

@@ -126,9 +126,11 @@ public class ApplicationMain {
         sc.close();
     }
 
+    /**
+     * Determine the winner based on longest chain lengths of the players
+     * @param game playing game
+     */
     private static void getWinnerDeck(SimplifiedOkeyGame game) {
-        // determine the winner based on longest chain lengths of the players
-        // use getPlayerWithHighestLongestChain method of game for this task
         Player[] winnerDeck = game.getPlayerWithHighestLongestChain();
         if( winnerDeck.length == 1){
             System.out.println("Winner is: " + winnerDeck[0].getName());
