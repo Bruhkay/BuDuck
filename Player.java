@@ -45,7 +45,11 @@ public class Player {
         }
         return won; */
 
+<<<<<<< HEAD
         return 6 <= this.findLongestChain();
+=======
+        return 14 == this.findLongestChain();
+>>>>>>> bcb2144f6d2104ed837defc3790500768f0862ce
     }
     
     /**
@@ -73,7 +77,10 @@ public class Player {
     }
 
     
-
+    /**
+     * Finds the tiles that creates the longest chain
+     * @return tile array
+     */
     public Tile[] usefulTiles() {
 
         int longestChain = findLongestChain();

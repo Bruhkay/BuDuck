@@ -5,27 +5,7 @@ arkadaslar oncelikle..okey oynamayi ogretmeniz lazim @burkay
 görev dağılımını ayarlayalım mı?
 
 Bazı yerlere comment ekledim. Anlamadığım veya bana yanlış gelen yerlere. Buraya da listeleyeyim.
-1.  Player class usefulTiles metodu: line 71 
-    "if (playerTiles[i].getValue() - playerTiles[i - longestChain].getValue() == longestChain)"
-    Burada "i - longestChain" < 0 olduğu durumlar oluyor sanki.
-    Böyle olunca da array in indeix'i negatif oluyor.
-    Onu düzeltmemiz lazım. Ama ben o metodu da çok anlamadım. 
-    Anlayan biri el atarsa çok makbule geçer.
-
-
-
-
-
-2.  Player class getAndRemoveTile() methodu: line 118
-    Ben burda hala plusWhat ı anlamadım.
-    Yani benim düşünceme göre plusWhat ı ekleyince fazladan 1 tane index atlıyoru.
-    Buna da bi bakarsanız çok ii olur
-
-
-
-
-
-3.  Simplified_Okey_Game class getPlayerWithHighestLongestChain() methodu: line 99
+1.  Simplified_Okey_Game class getPlayerWithHighestLongestChain() methodu: line 99
     Bu method winnerları doğru döndürmüyor olabilir. 
     Çünkü mesela 3 oyuncunun sırasıyla 5-5-7 uzunluğunda longChain leri olsun.
     Bu kodda ilk başta longChain 5 oluyor ve ilk oyuncuyu winner[0]'a yerleştiriyor. Sonra ikinci oyuncunun da 5 olduğu için o da winner[1]'e yerleşiyor.
@@ -74,11 +54,8 @@ Bazı yerlere comment ekledim. Anlamadığım veya bana yanlış gelen yerlere. 
     }
 
 
-
-
-
-4. Simplified_Okey_Game class distributeTilesToPlayers() methodu: line 45
-    players[0]'a 15 diğerlerine 14 tile dağıtılmalı.
+    2. Ortadan çekilecek Tile kalmadığında program bitmek yerine hata veriyor. Çünkü tile listesi taş kalmadığı için null oluyor. Bu yüzden buuble sort yapılırken null ile karşılaştırmaya çalışıyor.
+    Bunu çözmek için sistemin oyun bitirme koşulunu doğru bir şeklide yürütmesi lazım.
 
 
 
