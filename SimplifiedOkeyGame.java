@@ -111,12 +111,9 @@ public class SimplifiedOkeyGame {
         at ApplicationMain.main(ApplicationMain.java:117)
 
      * Hatası veriyor, yazarın elinden öper
-<<<<<<< HEAD
-=======
      * 
      * --Düzelmiş olması lazım ama bubbleSort'taki hatadan dolayı oyun galibi 
      * ilan etme noktasına gelmiyor şuan.
->>>>>>> bcb2144f6d2104ed837defc3790500768f0862ce
      */
     public Player[] getPlayerWithHighestLongestChain() {
         Player[] winners = new Player[1];
