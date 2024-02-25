@@ -74,7 +74,6 @@ public class SimplifiedOkeyGame {
      */
     public String getTopTile() {
         Tile t = tiles[tileCount -1];
-        tiles[tileCount-1] = null;
         tileCount--;
         String a = t.toString();
         players[currentPlayerIndex].addTile(t);
@@ -121,6 +120,7 @@ public class SimplifiedOkeyGame {
      */
     public Player[] getPlayerWithHighestLongestChain() {
         Player[] winners = new Player[1];
+        Player[] plHolder;
         int temp = 0;
         int counter = 0;
         for (int i = 0; i < players.length; i++) {
@@ -131,8 +131,12 @@ public class SimplifiedOkeyGame {
         for (int j = 0; j < players.length; j++) {
             if (players[j].findLongestChain() == temp) {
                 counter++;
+                plHolder = winners.clone();
                 if (counter > 1) {
                     winners = new Player[counter];
+                }
+                for( int i = 0; i < plHolder.length; i++){
+                    winners[i] = plHolder[i];
                 }
                 winners[counter - 1] = players[j];
             }
@@ -145,7 +149,7 @@ public class SimplifiedOkeyGame {
      * @return true if there is tiles on the stack
      */
     public boolean hasMoreTileInStack() {
-        return tileCount != 0;
+        return tileCount > 2;
     }
 
    
@@ -229,6 +233,10 @@ public class SimplifiedOkeyGame {
      */
     public void passTurnToNextPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % 4;
+    }
+
+    public int getTileCount(){
+        return this.tileCount;
     }
 
     /**

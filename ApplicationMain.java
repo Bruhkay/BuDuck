@@ -27,8 +27,8 @@ public class ApplicationMain {
         boolean gameContinues = true;
         int playerChoice = -1;
 
-        while(gameContinues) {
-            
+        do
+        {
             int currentPlayer = game.getCurrentPlayerIndex();
             System.out.println(game.getCurrentPlayerName() + "'s turn.");
             
@@ -118,7 +118,10 @@ public class ApplicationMain {
                     }
                 }
             }
-        }
+        } while (game.getTileCount() > 4 && gameContinues);
+
+        System.out.println("Deck ran out!");
+        getWinnerDeck(game);
 
         sc.close();
     }
@@ -128,12 +131,12 @@ public class ApplicationMain {
         // use getPlayerWithHighestLongestChain method of game for this task
         Player[] winnerDeck = game.getPlayerWithHighestLongestChain();
         if( winnerDeck.length == 1){
-            System.out.println("Winner is: " + winnerDeck[0].toString());
+            System.out.println("Winner is: " + winnerDeck[0].getName());
         }
         else{
             System.out.print("The winners are: ");
             for (Player winner: winnerDeck) {
-                System.out.print("           " + winner.toString() + "               ");
+                System.out.print("           " + winner.getName() + "               ");
             }
             System.out.println();
         }
